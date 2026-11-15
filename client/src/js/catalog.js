@@ -2,7 +2,6 @@ let currentPage = 1;
 const limit = 4;
 
 function createProductCard(product) {
-    // Формуємо безпечне посилання з параметрами товару для checkout.html
     const checkoutUrl = `/checkout.html?productId=${product.id}&title=${encodeURIComponent(product.title)}&price=${product.price}`;
 
     return `
@@ -36,7 +35,6 @@ async function fetchAndRenderProducts(page) {
             renderProducts(products);
         }
 
-        // Якщо прийшло менше товарів, ніж ліміт — ховаємо кнопку "Завантажити ще"
         if (products.length < limit) {
             const loadMoreBtn = document.getElementById('load-more-btn');
             if (loadMoreBtn) loadMoreBtn.style.display = 'none';
@@ -53,10 +51,8 @@ document.addEventListener('DOMContentLoaded', () => {
     const loadMoreBtn = document.getElementById('load-more-btn');
     if (loadMoreBtn) {
         loadMoreBtn.addEventListener('click', () => {
-            // 2. Збільшуємо номер сторінки перед наступним запитом
             currentPage++; 
             
-            // 3. Робимо запит для нової сторінки
             fetchAndRenderProducts(currentPage);
         });
     }

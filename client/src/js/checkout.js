@@ -1,7 +1,5 @@
-// Базова адреса твого бекенд-сервера
 const API_URL = 'http://localhost:3000/api';
 
-// 1. Дістаємо параметри обраного товару з URL (?productId=1&title=Necklace&price=4500)
 function getSelectedProduct() {
     const params = new URLSearchParams(window.location.search);
     return {
@@ -11,7 +9,6 @@ function getSelectedProduct() {
     };
 }
 
-// 2. Відображаємо обраний товар на сторінці checkout.html
 function renderOrderSummary() {
     const itemsContainer = document.getElementById('checkout-items-list');
     const totalElement = document.getElementById('checkout-total-price');
@@ -39,7 +36,6 @@ function renderOrderSummary() {
     totalElement.textContent = `${product.price.toLocaleString('uk-UA')} грн`;
 }
 
-// 3. Обробка відправки форми замовлення
 async function handleCheckout(event) {
     event.preventDefault();
 
@@ -49,7 +45,6 @@ async function handleCheckout(event) {
         return;
     }
 
-    // Очищаємо телефон від пробілів, тире і дужок
     const rawPhone = document.getElementById('customerPhone').value;
     const cleanPhone = rawPhone.replace(/[\s\-\(\)]/g, '');
 
@@ -67,7 +62,6 @@ async function handleCheckout(event) {
 
     const delivery = document.getElementById('deliveryDetails').value.trim();
 
-    // Формуємо замовлення для бекенда (масив із одного товару)
     const orderData = {
         customer,
         delivery,
@@ -80,7 +74,6 @@ async function handleCheckout(event) {
         totalPrice: product.price
     };
 
-    // Блокуємо кнопку відправки від подвійного кліку
     const submitBtn = event.target.querySelector('button[type="submit"]');
     if (submitBtn) submitBtn.disabled = true;
 

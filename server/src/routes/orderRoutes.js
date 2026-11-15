@@ -4,7 +4,6 @@ import db from '../config/db.js';
 
 const router = express.Router();
 
-// 1. Створення замовлення та відправка реальної SMS
 router.post('/orders', (req, res) => {
     const { customer, delivery, items, totalPrice } = req.body;
 
@@ -41,11 +40,9 @@ router.post('/orders', (req, res) => {
                 completed++;
                 if (completed === items.length && !hasError) {
                     
-                    // Беремо реальний домен із налаштувань сервера (.env)
                     const baseUrl = process.env.BASE_URL || 'http://localhost:3000';
                     const activationLink = `${baseUrl}/api/orders/verify?token=${verificationToken}`;
                     
-                    // Текст SMS латиницею або кирилицею (латиниця дешевша — 1 сегмент замість 2-3)
                     const smsText = `Zamovlennya #${orderId} pryynyato. Pidtverdit za posylannyam: ${activationLink}`;
 
                     try {
@@ -58,7 +55,7 @@ router.post('/orders', (req, res) => {
                             body: JSON.stringify({
                                 recipients: [customer.phone],
                                 sms: {
-                                    sender: process.env.SMS_SENDER || 'Msg', // Ім'я відправника в кабінеті TurboSMS
+                                    sender: process.env.SMS_SENDER || 'Msg',
                                     text: smsText
                                 }
                             })
@@ -86,7 +83,6 @@ router.post('/orders', (req, res) => {
     });
 });
 
-// 2. Підтвердження замовлення за посиланням із SMS
 router.get('/orders/verify', (req, res) => {
     const { token } = req.query;
 
@@ -104,7 +100,6 @@ router.get('/orders/verify', (req, res) => {
                 return res.status(500).send('<h3>Помилка сервера при активації.</h3>');
             }
 
-            // Перенаправляємо клієнта назад на сайт із параметром успіху (або віддаємо сторінку подяки)
             const frontendUrl = process.env.FRONTEND_URL || 'http://localhost:5173';
             res.send(`
                 <div style="text-align: center; font-family: sans-serif; margin-top: 60px;">

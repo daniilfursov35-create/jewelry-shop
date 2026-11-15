@@ -1,6 +1,5 @@
 import sqlite3 from 'sqlite3';
 
-// 1. Створюємо (або відкриваємо) файл бази даних у корені проєкту
 const db = new sqlite3.Database('./shop.db', (err) => {
     if (err) {
         console.error('Помилка підключення до бази даних:', err.message);
@@ -9,12 +8,9 @@ const db = new sqlite3.Database('./shop.db', (err) => {
     }
 });
 
-// 2. Ініціалізація всіх таблиць та початкових даних суворо по черзі
 db.serialize(() => {
-    // Вмикаємо підтримку зовнішніх ключів (Foreign Keys) у SQLite
     db.run('PRAGMA foreign_keys = ON');
 
-    // Таблиця товарів
     db.run(`
         CREATE TABLE IF NOT EXISTS products (
             id INTEGER PRIMARY KEY AUTOINCREMENT,
@@ -30,7 +26,6 @@ db.serialize(() => {
         }
         console.log('Таблиця products успішно створена або перевірена');
 
-        // 3. Перевіряємо, чи є товари в базі (Seeding)
         db.get("SELECT COUNT(*) as count FROM products", (err, row) => {
             if (err) {
                 console.error('Помилка перевірки кількості товарів:', err.message);
@@ -51,7 +46,6 @@ db.serialize(() => {
         });
     });
 
-    // Таблиця замовлень із полями для SMS-верифікації
     db.run(`
         CREATE TABLE IF NOT EXISTS orders (
             id INTEGER PRIMARY KEY AUTOINCREMENT,
@@ -68,7 +62,6 @@ db.serialize(() => {
         if (err) console.error('Помилка створення таблиці orders:', err.message);
     });
 
-    // Проміжна таблиця Many-to-Many для зв'язку замовлень і товарів
     db.run(`
         CREATE TABLE IF NOT EXISTS order_items (
             id INTEGER PRIMARY KEY AUTOINCREMENT,
@@ -83,5 +76,4 @@ db.serialize(() => {
     });
 });
 
-// 4. Експортуємо готовий об'єкт бази для використання в контролерах/роутах
 export default db;
