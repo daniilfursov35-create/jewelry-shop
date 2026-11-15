@@ -1,0 +1,112 @@
+.jewelry-artistry {
+    width: 100%;
+    padding: 56px 0;
+    background-color: #ffffff
+}
+
+.jewelry-artistry .container {
+    display: flex;
+    align-items: flex-start;
+    justify-content: center;
+    flex-direction: column;
+    gap: 32px;
+}
+
+.jewelry-image-thumb {
+    width: 100%;
+}
+
+.jewelry-img {
+    width: 100%;
+    height: 335px;
+    object-fit: cover;
+}
+
+.jewelry-content {
+    display: flex;
+    flex-direction: column;
+    gap: 24px;
+    width: 100%;
+}
+
+.jewelry-header {
+    display: flex;
+    flex-direction: column;
+    gap: 24px;
+}
+
+.section-title {
+    font-size: 36px;
+}
+
+.section-description {
+    font-size: 18px;
+}
+
+.priorities-list {
+    display: flex;
+    flex-direction: column;
+    gap: 24px;
+}
+
+.priority-item {
+    gap: 8px;
+    display: flex;
+    align-items: center;
+    font-size: 18px;
+    font-weight: 700;
+}
+
+.priority-item::before {
+    content: "";
+    display: inline-block;
+    flex-shrink: 0;
+    width: 24px;
+    height: 24px;
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: contain;
+}
+
+.icon-leaf::before {
+    background-image: url(../img/leaf.svg);
+}
+
+.icon-heart::before {
+    background-image: url(../img/donate-heart.svg);
+}
+
+.icon-book::before {
+    background-image: url(../img/book.svg);
+}
+
+@media screen and (min-width: 768px) {
+    .jewelry-artistry {
+        padding: 112px 0;
+    }
+
+    .jewelry-img {
+        height: 456px;
+    }
+    
+    .section-title {
+        font-size: 36px;
+    }
+}
+
+@media screen and (min-width: 1440px) {
+    .jewelry-artistry .container {
+        align-items: center;
+        justify-content: flex-start;
+        flex-direction: row;
+    }
+
+    .jewelry-image-thumb,
+    .jewelry-content {
+        flex-basis: calc((100% - 32px) / 2);
+    }
+
+    .section-title {
+        font-size: 48px;
+    }
+}
